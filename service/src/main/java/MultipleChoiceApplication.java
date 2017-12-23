@@ -1,4 +1,6 @@
 import io.dropwizard.Application;
+import io.dropwizard.java8.Java8Bundle;
+import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import lombok.SneakyThrows;
 
@@ -11,6 +13,11 @@ public class MultipleChoiceApplication
     BaseResourceFactory.ResourceFactory resources =
       new BaseResourceFactory.ResourceFactory(config, env);
     env.jersey().register(resources.getRootResource());
+  }
+
+  @Override
+  public void initialize(Bootstrap<MultipleChoiceConfiguration> bootstrap) {
+    bootstrap.addBundle(new Java8Bundle());
   }
 
   @SneakyThrows
