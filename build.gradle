@@ -3,6 +3,7 @@ ext {
   guavaVersion = "23.0"
   lombokVersion = "1.16.18"
   dropWizardVersion = "1.1.4"
+  dl4jVersion = "0.9.1"
 }
 
 buildscript {
@@ -43,10 +44,18 @@ project(":service") {
   }
 
   dependencies {
-    compile "io.dropwizard:dropwizard-core:$dropWizardVersion"
-    compile "org.projectlombok:lombok:$lombokVersion"
     compile "org.apache.opennlp:opennlp-tools:$opennlpVersion"
+
     compile "com.google.guava:guava:$guavaVersion"
+
+    compile "org.projectlombok:lombok:$lombokVersion"
+
+    compile "io.dropwizard:dropwizard-core:$dropWizardVersion"
+
+    compile "org.deeplearning4j:deeplearning4j-core:$dl4jVersion"
+    compile "org.deeplearning4j:deeplearning4j-nlp:$dl4jVersion"
+    compile "org.nd4j:nd4j-native-platform:$dl4jVersion"
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
   }
 }

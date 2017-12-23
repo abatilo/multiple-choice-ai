@@ -1,1 +1,8 @@
-version: "1.0.0"
+sentenceModel: en-sent.bin
+posModel: en-pos-perceptron.bin
+w2vModel: news.bin
+stopWords: stopwords.txt
+wordScanner:
+  allowedTags:
+    - NN
+    - VB
