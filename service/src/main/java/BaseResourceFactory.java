@@ -10,8 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.sentdetect.SentenceModel;
-import org.deeplearning4j.models.embeddings.loader.WordVectorSerializer;
-import org.deeplearning4j.models.word2vec.Word2Vec;
 
 @AllArgsConstructor
 public class BaseResourceFactory {
@@ -25,7 +23,6 @@ public class BaseResourceFactory {
     }
 
     private final String w2vModel = config.getW2vModel();
-    private final Word2Vec vec = WordVectorSerializer.readWord2VecModel(w2vModel);
 
     private final InputStream posStream =
       Resources.getResource(config.getPosModel()).openStream();
