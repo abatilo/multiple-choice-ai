@@ -1,9 +1,11 @@
 import com.google.common.collect.Sets;
 import com.google.common.io.Resources;
 import io.dropwizard.setup.Environment;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.Map;
 import java.util.Set;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -22,8 +24,6 @@ public class BaseResourceFactory {
       super(config, env);
     }
 
-    private final String w2vModel = config.getW2vModel();
-
     private final InputStream posStream =
       Resources.getResource(config.getPosModel()).openStream();
     private final POSModel posModel = new POSModel(posStream);
@@ -36,6 +36,9 @@ public class BaseResourceFactory {
             Charset.defaultCharset()));
 
     private final Set<String> TAGS = config.getAllowedTags();
+
+    private final Map<String, double[]> vec =
+      Word2Vec.fromBin(new File(config.getW2vModel()));
 
     @Getter(AccessLevel.PUBLIC)
     private final RootResource rootResource = new RootResource();
