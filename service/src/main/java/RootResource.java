@@ -1,14 +1,19 @@
-import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-
-import lombok.SneakyThrows;
 
 @Path("/")
 public class RootResource {
 
-  @GET
-  @SneakyThrows
-  public String root() {
+  @POST
+  public String root(MultipleChoiceRequest req) {
+    if (req == null) {
+      return "JSON request required";
+    }
+    if (req.getQ() != null) {
+      System.out.println(req.getQ());
+    } else {
+      System.out.println("No question was given");
+    }
     return "ok";
   }
 
