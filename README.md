@@ -35,6 +35,7 @@ java -jar service/multiple-choice-ai.jar server local.yaml
 multiple-choice-ai is a Dropwizard service which will use the specified yaml
 file to load in configurations.
 
+### Usage
 Once the server is running, a request can be made like so (assumes you have
 [httpie](https://github.com/jakubroztocil/httpie) installed):
 
@@ -61,6 +62,10 @@ Snail
 
 The response is nothing more than the text of the answer that the service
 believes is correct.
+
+If the request is malformed, you will receive an HTTP status of 400. If the
+request was properly formed, but the service was unable to answer due to out of
+vocabulary words, the service will return HTTP 422.
 
 ## Results
 
