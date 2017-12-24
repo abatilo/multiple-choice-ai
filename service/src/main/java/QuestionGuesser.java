@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,16 @@ public class QuestionGuesser {
   private final Set<String> FILTERED_POS_TAGS;
   private final Map<String, double[]> VECTOR_SPACE;
 
+  private static final Pattern WEIRD_QUOTE = Pattern.compile("’");
+  private static final Pattern APOSTROPHE_S = Pattern.compile("'s");
+  private static final Pattern CANT = Pattern.compile("can't");
+  private static final Pattern WONT = Pattern.compile("won't");
+  private static final Pattern NOT = Pattern.compile("n't");
+  private static final Pattern ARE = Pattern.compile("'re");
+  private static final Pattern AM = Pattern.compile("'m");
+  private static final Pattern WILL = Pattern.compile("'ll");
+  private static final Pattern HAVE = Pattern.compile("'ve");
+
   /**
    * Replaces common contractions with their full versions
    *
@@ -32,16 +43,26 @@ public class QuestionGuesser {
    * @return Returns a new String with all of its contractions expanded
    */
   private static String expandContractions(String inputString) {
-    return Strings.nullToEmpty(inputString)
-      .replace('’', '\'')
-      .replace("'s", "")
-      .replace("can't", "cannot")
-      .replace("won't", "will not")
-      .replace("n't", " not")
-      .replace("'re", " are")
-      .replace("'m", " am")
-      .replace("'ll", " will")
-      .replace("'ve", " have");
+    return
+      WEIRD_QUOTE.matcher(
+          HAVE.matcher(
+            WILL.matcher(
+              AM.matcher(
+                ARE.matcher(
+                  NOT.matcher(
+                    WONT.matcher(
+                      CANT.matcher(
+                        APOSTROPHE_S.matcher(
+                          Strings.nullToEmpty(inputString)
+                          ).replaceAll("'")
+                        ).replaceAll("")
+                      ).replaceAll("can not")
+                    ).replaceAll("will not")
+                  ).replaceAll("not")
+                ).replaceAll("are")
+              ).replaceAll("am")
+            ).replaceAll("will")
+          ).replaceAll("have");
   }
 
   private boolean allowedWord(String word, String tag) {
