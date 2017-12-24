@@ -16,7 +16,7 @@ with open('./question_bank.json') as jsonin:
                 if r.status_code == 200:
                     if ans == r.text:
                         correct += 1
-                print "\rGot %d correct out of %d which is %.2f" % (correct, i, (float(correct) / i) * 100),
+                print "\rGot %d correct out of %d which is %.2f%%" % (correct, i, (float(correct) / i) * 100),
                 break
             except:
                 time.sleep(1)
