@@ -1,3 +1,5 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.google.common.collect.Sets;
 import com.google.common.io.Resources;
 
@@ -27,6 +29,8 @@ public class BaseResourceFactory {
       super(config, env);
     }
 
+    private final ObjectMapper mapper = new ObjectMapper();
+
     private final InputStream posStream =
       Resources.getResource(config.getPosModel()).openStream();
     private final POSModel posModel = new POSModel(posStream);
@@ -38,13 +42,16 @@ public class BaseResourceFactory {
           Resources.readLines(Resources.getResource(config.getStopWords()),
             Charset.defaultCharset()));
 
-    private final Set<String> TAGS = config.getAllowedTags();
+    private final Set<String> TAGS = config.getFilteredTags();
 
     private final Map<String, double[]> vec =
       Word2Vec.fromBin(new File(config.getW2vModel()));
 
+    private final QuestionGuesser guesser = new QuestionGuesser(
+        tagger, STOP_WORDS, TAGS, vec);
+
     @Getter(AccessLevel.PUBLIC)
-    private final RootResource rootResource = new RootResource();
+    private final RootResource rootResource = new RootResource(mapper, guesser);
 
   }
 }

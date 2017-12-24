@@ -1,6 +1,5 @@
 posModel: en-pos-perceptron.bin
 stopWords: stopwords.txt
-allowedTags:
-  - NN
-  - VB
+filteredTags:
+  - DT
 w2vModel: ./service/vectors.bin

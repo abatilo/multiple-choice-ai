@@ -11,5 +11,5 @@ public class MultipleChoiceConfiguration extends Configuration {
   @Valid private String posModel;
   @Valid private String w2vModel;
   @Valid private String stopWords;
-  @Valid private Set<String> allowedTags;
+  @Valid private Set<String> filteredTags;
 }
