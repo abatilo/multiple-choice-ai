@@ -23,7 +23,6 @@ public class RootResource {
 
   @POST
   public Response root(MultipleChoiceRequest req) {
-    System.out.println(req.toString());
     if (req == null) {
       return Response.status(Response.Status.BAD_REQUEST).build();
     }
@@ -32,8 +31,6 @@ public class RootResource {
       Optional<String> guess = guesser.guess(req.getQ(), answersOf(req));
       if (guess.isPresent()) {
         return Response.ok(guess.get()).build();
-      } else {
-        System.out.println("No answer");
       }
     }
     return Response.status(UNPROCESSABLE_ENTRY).build();

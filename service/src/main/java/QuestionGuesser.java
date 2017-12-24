@@ -120,12 +120,6 @@ public class QuestionGuesser {
    */
   public Optional<String> guess(String question, List<String> answers) {
     List<String> tokensOfQuestion = normalizedTokensOf(question);
-    StringBuilder sb = new StringBuilder();
-    for (String s : tokensOfQuestion) {
-      sb.append(s);
-      sb.append(" ");
-    }
-    log.warn(sb.toString());
     // Defaults to -2 since cosine similarity ranges from -1 to 1
     final double NO_ANSWER = -2.0;
 
@@ -135,22 +129,6 @@ public class QuestionGuesser {
       List<String> tokensOfAnswer = normalizedTokensOf(answer);
       Optional<Double> cosSim =
         cosineSimilarityOf(tokensOfQuestion, tokensOfAnswer);
-
-      StringBuilder dbg = new StringBuilder();
-      if (!cosSim.isPresent()) {
-        dbg.append("No cosSim -- ");
-        dbg.append(answer);
-      } else {
-        dbg.append(cosSim.get());
-        dbg.append(" -- ");
-        for (String s : tokensOfAnswer) {
-          dbg.append(s);
-          dbg.append(" ");
-        }
-      }
-      log.warn(dbg.toString());
-      log.warn("");
-
       if (cosSim.isPresent() && cosSim.get() > topCosineSimilarity) {
         topCosineSimilarity = cosSim.get();
         topAnswer = answer;
@@ -173,12 +151,6 @@ public class QuestionGuesser {
     Optional<double[]> optVec2 = vectorOf(answer);
 
     if (!optVec1.isPresent() || !optVec2.isPresent()) {
-      if (!optVec1.isPresent()) {
-        log.warn("There was no vector for: " + question);
-      }
-      if (!optVec2.isPresent()) {
-        log.warn("There was no vector for: " + answer);
-      }
       return Optional.empty();
     }
 
