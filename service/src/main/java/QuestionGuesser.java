@@ -31,10 +31,7 @@ public class QuestionGuesser {
   private static final Pattern HAVE = Pattern.compile("'ve");
 
   /**
-   * Replaces common contractions with their full versions
-   *
-   * This approach is currently using .replace() which compiles a pattern for
-   * every call which could be a performance hit.
+   * Replaces common contractions with their full versions.
    *
    * Based on:
    * https://stackoverflow.com/questions/14062030/removing-contractions
@@ -65,6 +62,13 @@ public class QuestionGuesser {
           ).replaceAll("have");
   }
 
+  /**
+   * Cheap and easy filter for removing low impact words.
+   *
+   * @param word The word to evaluate
+   * @param tag The part of speech tag for the word
+   * @return Returns whether or not we should keep this word
+   */
   private boolean allowedWord(String word, String tag) {
     return word.length() > 2
       && !FILTERED_POS_TAGS.contains(tag)
@@ -169,6 +173,13 @@ public class QuestionGuesser {
     return Optional.of(dotProduct / (Math.sqrt(norm1) * Math.sqrt(norm2)));
   }
 
+  /**
+   * Sums the vectors of all the words in the passed in list to create a single
+   * thought vector.
+   *
+   * @param words The words that make up the thought
+   * @return Returns an optional holding the vector for a given thought
+   */
   private Optional<double[]> vectorOf(List<String> words) {
     int vectorSize =
       VECTOR_SPACE.entrySet().iterator().next().getValue().length;
