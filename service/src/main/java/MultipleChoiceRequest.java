@@ -1,10 +1,12 @@
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
 
 @Data
 public class MultipleChoiceRequest {
-  private String q;
-  private String a;
-  private String b;
-  private String c;
-  private String d;
+  @JsonProperty("#Q") private String q;
+  @JsonProperty("A") private String a;
+  @JsonProperty("B") private String b;
+  @JsonProperty("C") private String c;
+  @JsonProperty("D") private String d;
 }

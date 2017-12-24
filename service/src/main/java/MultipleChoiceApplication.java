@@ -1,7 +1,11 @@
+import com.fasterxml.jackson.databind.DeserializationFeature;
+
 import io.dropwizard.Application;
-import io.dropwizard.java8.Java8Bundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+
+import io.dropwizard.java8.Java8Bundle;
+
 import lombok.SneakyThrows;
 
 public class MultipleChoiceApplication
@@ -18,6 +22,8 @@ public class MultipleChoiceApplication
   @Override
   public void initialize(Bootstrap<MultipleChoiceConfiguration> bootstrap) {
     bootstrap.addBundle(new Java8Bundle());
+    bootstrap.getObjectMapper().disable(
+        DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
   }
 
   @SneakyThrows

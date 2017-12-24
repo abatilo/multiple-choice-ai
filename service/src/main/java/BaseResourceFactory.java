@@ -1,17 +1,20 @@
 import com.google.common.collect.Sets;
 import com.google.common.io.Resources;
+
 import io.dropwizard.setup.Environment;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.Set;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
 import opennlp.tools.postag.POSModel;
-import opennlp.tools.sentdetect.SentenceModel;
 
 @AllArgsConstructor
 public class BaseResourceFactory {
